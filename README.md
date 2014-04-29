@@ -89,3 +89,114 @@ mysql redis pecl
     $redis->set('test', 'hello world');
     echo $redis->get('test');
 ?>
+
+
+> 1：去下面的网站下载EPEL对应的版本：（epel是fedora维护的yum源，里面软件众多）
+http://fedoraproject.org/wiki/EPEL
+2：我下载的是这个：
+wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+3：安装epel：
+rpm -ivh epel-release-6-8.noarch.rpm 
+warning: epel-release-6-8.noarch.rpm: Header V3 RSA/SHA256 Signature, key ID 0608b895: NOKEY
+Preparing...                ########################################### [100%]
+   1:epel-release           ########################################### [100%]
+
+4：安装redis：
+[root@CentOS6 ~]# yum install redis
+
+
+    关于redis里的db
+
+进入客户端，默认使用编号为0的数据库，可以通过命令切换，如：
+
+lch@localhost:Desktop $ redis-cli
+redis 127.0.0.1:6379> select 1
+OK
+redis 127.0.0.1:6379[1]> select 0
+OK
+redis 127.0.0.1:6379>
+设置一对key-value
+
+redis 127.0.0.1:6379> set name luchanghong
+OK
+redis 127.0.0.1:6379> set gender male
+OK
+redis 127.0.0.1:6379> set age 24
+OK
+匹配查找key
+
+redis 127.0.0.1:6379> keys *
+1) "age"
+2) "gender"
+3) "name"
+redis 127.0.0.1:6379> keys name
+1) "name"
+redis 127.0.0.1:6379> keys nam
+(empty list or set)
+redis 127.0.0.1:6379> keys nam*
+1) "name"
+取出key对应的value
+
+redis 127.0.0.1:6379> get name
+"luchanghong"
+redis 127.0.0.1:6379> get gender
+"male"
+redis 127.0.0.1:6379> get age
+"24"
+判断key是否存在
+
+redis 127.0.0.1:6379> exists name
+(integer) 1
+redis 127.0.0.1:6379> exists names
+(integer) 0
+删除key
+
+redis 127.0.0.1:6379> set test1 1
+OK
+redis 127.0.0.1:6379> set test2 2
+OK
+redis 127.0.0.1:6379> del test1
+(integer) 1
+redis 127.0.0.1:6379> exists test1
+(integer) 0
+redis 127.0.0.1:6379> exists test2
+(integer) 1
+设置/查询多个key
+
+redis 127.0.0.1:6379> mset passwd 123 city beijing
+OK
+redis 127.0.0.1:6379> mget passwd city
+1) "123"
+2) "beijing"
+list操作
+
+redis 127.0.0.1:6379> lpush people lch
+(integer) 1
+redis 127.0.0.1:6379> lset people 0 luchanghong
+OK
+redis 127.0.0.1:6379> lpush people male
+(integer) 2
+redis 127.0.0.1:6379> llen people
+(integer) 2
+
+redis 127.0.0.1:6379> lrange people 0 1
+1) "male"
+2) "luchanghong"
+redis 127.0.0.1:6379> lindex people 0
+"male"
+redis 127.0.0.1:6379> lindex people 1
+"luchanghong"
+set操作
+
+redis 127.0.0.1:6379> sadd myset a
+(integer) 1
+redis 127.0.0.1:6379> sadd myset b c
+(integer) 2
+redis 127.0.0.1:6379> smembers myset
+1) "c"
+2) "a"
+3) "b"
+redis 127.0.0.1:6379> sismember myset d
+(integer) 0
+redis 127.0.0.1:6379> sismember myset a
+(integer) 1
