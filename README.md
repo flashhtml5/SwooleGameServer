@@ -200,3 +200,18 @@ redis 127.0.0.1:6379> sismember myset d
 (integer) 0
 redis 127.0.0.1:6379> sismember myset a
 (integer) 1
+
+ - 备忘tip
+apache的虚拟目录可能会访问不了,要关闭centos的防护机制
+setenforce 0
+
+- xdebug 远程php端调试技巧:
+1,设好ide方的端口号
+2,设好代码查找的mappath
+3,设一个空的php webapplication调试项目
+4,开始调试,提示找不到文件,不用理会
+5,开始 php xxx.php 执行要调试的代码
+
+
+
+
